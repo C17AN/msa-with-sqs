@@ -1,0 +1,5 @@
+FROM node:16-alphine
+WORKDIR /app
+COPY ./package.json index.js /app/
+RUN yarn install
+CMD yarn start
