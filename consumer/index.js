@@ -1,6 +1,6 @@
 import express from "express"
 import AWS from 'aws-sdk';
-import { postMessage } from './controllers/messageController.js';
+import { getMessage } from './controllers/messageController.js';
 import dotenv from "dotenv"
 
 const app = express();
@@ -8,7 +8,7 @@ app.use(express.json())
 dotenv.config();
 
 const PROVIDER_REGION = process.env.AWS_PROVIDER_REGION
-const PROVIDER_PORT = process.env.PROVIDER_PORT || 5500
+const CONSUMER_PORT = process.env.CONSUMER_PORT || 5501
 
 
 AWS.config.update({
@@ -17,8 +17,8 @@ AWS.config.update({
   region: PROVIDER_REGION,
 });
 
-app.post("/message", postMessage)
+app.get("/message", getMessage)
 
-app.listen(PROVIDER_PORT, () => {
-  console.log(`Provider is Listening on port ${PROVIDER_PORT}`)
+app.listen(CONSUMER_PORT, () => {
+  console.log(`Consumer is Listening on port ${CONSUMER_PORT}`)
 })
